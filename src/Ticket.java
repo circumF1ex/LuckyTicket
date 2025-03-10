@@ -1,39 +1,30 @@
 public class Ticket {
 	
-	private String ticketNumber;
+	private int ticketNumber;
 	
-	public void setTicketNumber(String tn) {
+	public boolean setTicketNumber(int tn) {
 		
-		if (validTicketNumber(tn)) {
-			this.ticketNumber = tn;
-		}
-		
-		else {
-			throw new UnsupportedOperationException("Not valid ticket");
-		}
-	}
-	
-	public String getTicketNumber() {
-		return this.ticketNumber;
-	}
-	
-	public Boolean validTicketNumber(String tn) {
-		if (Integer.parseInt(tn) > -1 || Integer.parseInt(tn) < 1000000) {
-			return true;
-		}
-		else {
+		if (tn < 1001 || tn > 999999) {
 			return false;
 		}
 		
+		else {
+			this.ticketNumber = tn;
+			return true;
+		}
 	}
 	
-	public static Boolean checkLuck(Ticket t) {
-		Integer firstHalfOfNum = Integer.parseInt(t.getTicketNumber().substring(0, 3));
-		Integer secondHalfOfNum = Integer.parseInt(t.getTicketNumber().substring(2));
-		Integer sumOfFirstHalf = (firstHalfOfNum % 10) + ((firstHalfOfNum / 10) % 10) + (firstHalfOfNum / 100) % 10;
-		Integer sumOfSecondHalf = (secondHalfOfNum % 10) + ((secondHalfOfNum / 10) % 10) + (secondHalfOfNum / 100) % 10;
+	public int getTicketNumber() {
+		return this.ticketNumber;
+	}
+	
+	public boolean checkLuck() {
+		int fHalf = this.getTicketNumber() / 1000;
+		int sHalf = this.getTicketNumber() % 1000;
+		int fHalfSum = fHalf / 100 + (fHalf / 10 % 10) + (fHalf % 100 % 10);
+		int sHalfSum = sHalf / 100 + (sHalf / 10 % 10) + (sHalf % 100 % 10);
 		
-		if (sumOfFirstHalf.compareTo(sumOfSecondHalf) == 0) {
+		if (sHalfSum == fHalfSum) {
 			return true;
 		}
 		
